@@ -62,11 +62,11 @@
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script>
-        emailjs.init("1q8wVxRr-MHM3y_30");
+        emailjs.init("-0_44_RZ8CR7BBAPo");
 
         document.getElementById('form').addEventListener('submit', function(event) {
             event.preventDefault();
-            emailjs.sendForm("service_p0gz5sq", "template_bm07xwv", this)
+            emailjs.sendForm("service_pudgcno", "template_vddg1pk", this)
               .then(() => alert("Verifique sua caixa de emails!"))
               .catch((err) => alert("Erro: " + JSON.stringify(err)));
         });
