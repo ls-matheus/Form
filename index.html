@@ -64,14 +64,31 @@
     emailjs.init("1xSMp9l_UTJgpPmU-");
 
     const form = document.getElementById('form');
-    form.addEventListener('submit', function(event) {
+
+    form.addEventListener('submit', async function(event) {
       event.preventDefault();
 
+      const emailInput = this.user_email.value;
+
+      // 🔍 Verificar email real via AbstractAPI
+      try {
+        const response = await fetch(`https://emailvalidation.abstractapi.com/v1/?api_key=8c22a10ee8904f5891a5e3b5f4fad74d&email=${emailInput}`);
+        const data = await response.json();
+
+        if (!data.is_valid_format.value || data.deliverability !== "DELIVERABLE") {
+          alert("⚠️ Email inexistente ou inválido, tente outro!");
+          return;
+        }
+      } catch (error) {
+        alert("❌ Erro ao validar email, tente novamente!");
+        return;
+      }
+
+      // Se passou na verificação, envia pelo EmailJS
       emailjs.sendForm("service_pudgcno", "template_vddg1pk", this)
-        .then(() => alert("Verifique sua caixa de emails!"))
-        .catch((err) => alert("Erro: " + JSON.stringify(err)));
+        .then(() => alert("📩 Verifique sua caixa de emails!"))
+        .catch((err) => alert("❌ Erro: " + JSON.stringify(err)));
     });
   </script>
 </body>
 </html>
-
